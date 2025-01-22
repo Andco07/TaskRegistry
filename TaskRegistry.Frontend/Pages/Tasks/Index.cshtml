@@ -1,0 +1,59 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Listado de Tareas";
+}
+
+<h2>Listado de Tareas</h2>
+
+<a asp-page="/Tasks/Create" class="btn btn-primary">Crear Nueva Tarea</a>
+
+<form method="get">
+    <div class="form-group">
+        <label for="EstadoFiltro">Filtrar por Estado:</label>
+        <select id="EstadoFiltro" name="EstadoFiltro" class="form-control" onchange="this.form.submit()">
+            <option value="">-- Todos --</option>
+            @foreach (var estado in Model.EstadosDisponibles)
+            {
+                if (Model.EstadoFiltro == estado)
+                {
+                    <option value="@estado" selected>@estado</option>
+                }
+                else
+                {
+                    <option value="@estado">@estado</option>
+                }
+            }
+        </select>
+    </div>
+
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Usuario Asignado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tarea in Model.Tareas)
+        {
+            <tr>
+                <td>@tarea.Titulo</td>
+                <td>@tarea.Descripcion</td>
+                <td>@tarea.Estado</td>
+                <td>@tarea.UsuarioAsignado</td>
+                <td>
+                    <a asp-page="/Tasks/Edit" asp-route-id="@tarea.Id" class="btn btn-warning">Editar</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@tarea.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

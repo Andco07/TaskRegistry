@@ -1,0 +1,50 @@
+﻿@page
+@model CreateModel
+@{
+    ViewData["Title"] = "Crear Tarea";
+}
+@using System.Security.Claims
+
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="card shadow-lg" style="width: 30rem; border-radius: 15px;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Crear Tarea</h3>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="Titulo" class="form-label">Título:</label>
+                    <input type="text" id="Titulo" name="Task.Titulo" asp-for="Task.Titulo" class="form-control" required placeholder="Ingrese el título de la tarea">
+                </div>
+                <div class="mb-3">
+                    <label for="Descripcion" class="form-label">Descripción:</label>
+                    <textarea id="Descripcion" name="Task.Descripcion" asp-for="Task.Descripcion" class="form-control" rows="3" required placeholder="Describa la tarea"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="Estado" class="form-label">Estado:</label>
+                    <select id="Estado" name="Task.Estado" asp-for="Task.Estado" class="form-select" required>
+                        <option value="">Seleccione un Estado</option>
+                        @foreach (var estado in Model.Task.EstadosDisponibles)
+                        {
+                            <option value="@estado">@estado</option>
+                        }
+                    </select>
+                </div>
+                @if (User.IsInRole("Administrador"))
+                {
+                    <div class="mb-3">
+                        <label for="UsuarioAsignadoId" class="form-label">Asignar a Usuario:</label>
+                        <select id="UsuarioAsignadoId" name="Task.UsuarioAsignadoId" asp-for="Task.UsuarioAsignadoId" class="form-select">
+                            <option value="">-- Seleccione un Usuario --</option>
+                            @foreach (var usuario in Model.Usuarios)
+                            {
+                                <option value="@usuario.Id">@usuario.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                }
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

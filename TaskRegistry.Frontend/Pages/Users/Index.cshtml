@@ -1,0 +1,34 @@
+﻿@page
+@model UsersIndexModel
+@{
+    ViewData["Title"] = "Lista de Usuarios";
+}
+
+<h2>Lista de Usuarios</h2>
+
+@if (!string.IsNullOrEmpty(Model.MensajeError))
+{
+    <p style="color: red;">@Model.MensajeError</p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Rol</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Usuarios)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Nombre</td>
+                <td>@user.Correo</td>
+                <td>@user.Rol</td>
+            </tr>
+        }
+    </tbody>
+</table>

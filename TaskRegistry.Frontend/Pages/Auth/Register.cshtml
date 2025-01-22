@@ -1,0 +1,44 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Registro de Usuario";
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="card shadow-lg" style="width: 25rem; border-radius: 15px;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Registro de Usuario</h3>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="Nombre" class="form-label">Nombre:</label>
+                    <input type="text" id="Nombre" name="RegisterData.Nombre" asp-for="RegisterData.Nombre" class="form-control" required placeholder="Ingrese su nombre completo">
+                </div>
+                <div class="mb-3">
+                    <label for="Correo" class="form-label">Correo:</label>
+                    <input type="email" id="Correo" name="RegisterData.Correo" asp-for="RegisterData.Correo" class="form-control" required placeholder="Ingrese su correo">
+                </div>
+                <div class="mb-3">
+                    <label for="Contraseña" class="form-label">Contraseña:</label>
+                    <input type="password" id="Contraseña" name="RegisterData.Contraseña" asp-for="RegisterData.Contraseña" class="form-control" required placeholder="Cree una contraseña">
+                </div>
+                <div class="mb-3">
+                    <label for="RolSeleccionado" class="form-label">Rol:</label>
+                    <select id="RolSeleccionado" name="RegisterData.RolSeleccionado" asp-for="RegisterData.RolSeleccionado" asp-items="@(new SelectList(Model.RegisterData.RolesDisponibles))" class="form-select" required>
+                        <option value="">Seleccione un rol</option>
+                    </select>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.RegisterData.MensajeError))
+                {
+                    <p class="text-danger text-center">@Model.RegisterData.MensajeError</p>
+                }
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </div>
+                <div class="text-center mt-3">
+                    <p class="mb-0">¿Ya tienes una cuenta?</p>
+                    <a asp-page="/Auth/Login" class="text-decoration-none">Inicia sesión aquí</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
